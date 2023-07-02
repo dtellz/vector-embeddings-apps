@@ -49,6 +49,7 @@ const run = async () => {
   await embedder.embedBatch(documents, 1000, async (embeddings) => {
     // Upsert the embeddings into the index
     await chunkedUpsert(index, embeddings, "default");
+    console.log(process.memoryUsage());
     counter += embeddings.length;
     progressBar.update(counter);
   });
