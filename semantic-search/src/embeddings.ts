@@ -45,3 +45,7 @@ class Embedder {
         }
     }
 }
+
+const embedder = new Embedder();
+
+export { embedder };
