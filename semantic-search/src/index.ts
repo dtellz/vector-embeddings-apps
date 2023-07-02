@@ -3,7 +3,7 @@ import cliProgress from "cli-progress";
 import { config } from "dotenv";
 import { loadCsvFile } from "./csvLoader.js";
 import { embedder } from "./embeddings.js";
-import { getPineconeClient } from "./pinecode.js";
+import { getPineconeClient } from "./pinecone.js";
 import { getEnv, getIndexingCliArgs } from "./utils/utils.js";
 import heapdump from 'heapdump';
 
@@ -48,7 +48,7 @@ const run = async () => {
 
     // Start the batch embedding process
     await embedder.init();
-    await embedder.embedBatch(documents, 1000, async (embeddings) => {
+    await embedder.embedBatch(documents, 1, async (embeddings) => {
         // Upsert the embeddings into the index
         await chunkedUpsert(index, embeddings, "default");
         console.log(process.memoryUsage());

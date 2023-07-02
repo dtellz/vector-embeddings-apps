@@ -1,15 +1,18 @@
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { config } from "dotenv";
-import { getEnv, validateEnvVars } from "./utils/utils.js";
+import { getEnv, validateEnvironmentVariables } from "./utils/util.js";
 
 config();
 
 let pineconeClient: PineconeClient | null = null;
 
-// Resolves to a PineconeClient instance
+// Returns a Promise that resolves to a PineconeClient instance
 export const getPineconeClient = async (): Promise<PineconeClient> => {
-  validateEnvVars();
-  if (!pineconeClient) {
+  validateEnvironmentVariables();
+
+  if (pineconeClient) {
+    return pineconeClient;
+  } else {
     pineconeClient = new PineconeClient();
 
     await pineconeClient.init({
@@ -17,5 +20,5 @@ export const getPineconeClient = async (): Promise<PineconeClient> => {
       environment: getEnv("PINECONE_ENVIRONMENT"),
     });
   }
-  return pineconeClient!;
+  return pineconeClient;
 };
