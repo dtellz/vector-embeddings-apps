@@ -6,4 +6,19 @@ const sliceIntoChunks = <T>(arr: T[], chunkSize: number) => {
     );
 };
 
-export { sliceIntoChunks };
+const getEnv = (key: string): string => {
+    const value = process.env[key];
+    if (!value) {
+        throw new Error(`Missing env variable ${key}`);
+    }
+    return value;
+}
+
+const validateEnvVars = () => {
+    getEnv("PINECONE_API_KEY");
+    getEnv("PINECONE_ENVIRONMENT");
+    getEnv("PINECONE_INDEX");
+};
+
+
+export { sliceIntoChunks, getEnv, validateEnvVars };
